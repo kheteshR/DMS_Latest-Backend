@@ -53,7 +53,8 @@ exports.GetIndividual = (name, SeatNumber, userId) => {
 				"name": name
 			}, {
 				$set: {
-					"userId": userId
+					"userId": userId,
+					"created_at":new Date()
 				},
 				$push: {
 					"Downloaded": fileHash,

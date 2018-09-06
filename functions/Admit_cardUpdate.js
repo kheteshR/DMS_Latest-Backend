@@ -68,7 +68,7 @@ exports.HallTicketUpdate=(walletName,status,id,message)=>{
                 //Serialize transfer transaction and announce
                 var hee=await (nem.model.transactions.send(common, transactionEntity, endpoint))
                 console.log("heeeeeeeeeeeeeeeeee================>",hee.transactionHash.data)
-                result123 =await (admitModel.findOneAndUpdate({ _id:id }, { $set: { "status":status,"message":message,"txHash":hee.transactionHash.data},$push:{"previousHashes":hee.transactionHash.data}},{new: true}))
+                result123 =await (admitModel.findOneAndUpdate({ _id:id }, { $set: { "status":status,"message":message,"txHash":hee.transactionHash.data, "created_At":new Date()},$push:{"previousHashes":hee.transactionHash.data}},{new: true}))
             
                     console.log("hhhhhhhhhhhhhhhhhhhhhhhhhhhh================>",result123)
                    

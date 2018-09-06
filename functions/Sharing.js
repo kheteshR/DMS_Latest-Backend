@@ -49,7 +49,8 @@ exports.Sharing = (userId,filehash, status,CompanyName) => {
 			"RecipientuserId": userId
 		}, {
 			$set: {
-				"status": status
+                "status": status,
+                "created_At":new Date()
 			},
 			$push: {
                 "shared": filehash,

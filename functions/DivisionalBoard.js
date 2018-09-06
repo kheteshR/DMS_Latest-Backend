@@ -66,7 +66,8 @@ exports.SetStatusByDivisionalBoard = (id, userId, TypeOform) => {
                 "Seat_Number": "E" + SeatNo,
                 "status": "Hall ticket auto generation sucessfully done",
                 "DivisionalStatus": "Hall ticket auto generation sucessfully done",
-                "txHash": hee.transactionHash.data
+                "txHash": hee.transactionHash.data,
+                "created_At":new Date()
             },
             $push: {
                 "previousHashes": hee.transactionHash.data

@@ -129,8 +129,7 @@ exports.PdfDocument = (Seat_Number,candiName,fatherName,HallCenter,motherName,do
         </div>
      </div>
      <br>
-     
-        </body>
+     </body>
         </html>
         `);
         await page.emulateMedia('screen');
@@ -139,7 +138,6 @@ exports.PdfDocument = (Seat_Number,candiName,fatherName,HallCenter,motherName,do
             format:'A4',
             printBackground:true
         }).then(result=>{
-            
             return resolve({
             message:"pdf conversion done",
             result: (new Buffer(result)).toString('base64')

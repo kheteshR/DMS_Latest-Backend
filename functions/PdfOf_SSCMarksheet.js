@@ -4,15 +4,6 @@ var hbs=require('handlebars');
 var path=require('path');
 var moment=require('moment');
 
-// const compiler=async function(templateName,data){
-//     const filePath=path.join(process.cwd(),'templates',`${templateName}.hbs`);
-//     const html=await fs.readFile(filePath,'utf-8');
-//     return hbs.compile(html);
-// };
-// hbs.registerHelper('dateFormat', function(value,format){
-// console.log('formatting',value,format);
-// return moment(value).format(format);
-// });
 exports.PdfDocumentSSCMARKSHEET = (Seat_Number,candiName,fatherName,HallCenter,motherName,dob,MobNo,TypeOform) => {
 
     return new Promise(async function(resolve,reject){
@@ -170,6 +161,9 @@ exports.PdfDocumentSSCMARKSHEET = (Seat_Number,candiName,fatherName,HallCenter,m
                     <td></td>
                  </tr>
                  </table>
+                 <br>
+                 <b>Digitally Signed by Division</b>
+                 <br/>Signature:<label style="color:blue">${Sign}</label>
            </div>
         </div>
      </div>

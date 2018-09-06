@@ -4,10 +4,7 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
-const UploadDocumentSchema = mongoose.Schema({
-    filesHash:Object,
-    DownloadedfileHash:Array,
-    PullTxHash:Array,
+const MarksSchema = mongoose.Schema({
     DocumentType:String,
     name:String,
     userId:String,
@@ -20,8 +17,7 @@ const UploadDocumentSchema = mongoose.Schema({
     txHash:String, 
     UserfileHash:Object,
     previousHashes:Array,
-    NewfileHash:Array, 
-   
+    NewfileHash:Array,    
     created_at: Date   
 });
 
@@ -34,4 +30,4 @@ mongoose.connect('mongodb://risabhsharma71:Rpqb123@ds111420.mlab.com:11420/care4
    (err)=>{
        console.log("err",err);
    })
-module.exports = mongoose.model('upload', UploadDocumentSchema);
+module.exports = mongoose.model('Marks', MarksSchema);

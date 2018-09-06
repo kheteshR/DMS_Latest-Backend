@@ -27,7 +27,12 @@ const admitSchema = mongoose.Schema({
          Seat_Number:String,
          crypto:String,
          txHash:String,
-         previousHashes:Array
+         previousHashes:Array,
+         TotalMarks:String,
+         Session:String,
+         Request_At:String,
+         DuplicateRequestStatus:String,
+         created_At:String
 });
 
 mongoose.Promise = global.Promise;
