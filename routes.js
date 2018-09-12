@@ -57,7 +57,6 @@ var upload = multer({
 });
 const nem = require("nem-sdk").default;
 const register = require('./functions/register');
-const contractJs = require('./functions/contract');
 var users = require("./models/account")
 var UploadFunction = require("./functions/upload")
 var GetIndividualDocument = require("./functions/GetIndividualDocument")
