@@ -1,94 +1,43 @@
-//1.
-var http = require('http');
-var fs = require('fs');
-var path = require('path');    
-const filePath = path.join(__dirname, '/nem/NanoWallet-2.1.2/start.html#!/');
-console.log(filePath)
-//2.
-var server = http.createServer(function (req, resp) {
-    //3.
-    if (req.url === "/create") {
-        fs.readFile(filePath, function (error, pgResp) {
-            if (error) {
-                resp.writeHead(404);
-                resp.write('Contents you are looking are Not Found');
-            } else {
-                resp.writeHead(200, { 'Content-Type': 'text/html' });
-                resp.write(pgResp);
-            }
-             
-            resp.end();
-        });
-    } else {
-        //4.
-        resp.writeHead(200, { 'Content-Type': 'text/html' });
-        resp.write('<h1>Product Manaager</h1><br /><br />To create product please enter: ' + req.url);
-        resp.end();
-    }
-});
-//5.
-server.listen(5050);
- 
-console.log('Server Started listening on 5050');
+//total block size
+var Block_Size=1000000;
+var AdditionalFees=12.5;
+var result;
+var n=12
+var sum=0;
+var sum1=0;
+var fees=[0.0887,0.1856,0.2307,0.1522,0.0532,0.0250,0.1409,0.2541,0.1147,0.2660,0.2933,0.0686]
+var size =[57247, 98732,134928,77275,29240,15440,70820,139603,63718,143807,190457,40572];
+for(var i = 0; i < fees.length; i++){
+  sum += fees[i]
+  sum1 += size[i]
+}
+var totalfees=sum;
+var totalsize=sum1;
+console.log('Summation of total tx fees ' + sum);
+console.log('Summation of total tx size ' + sum1);
 
-
-
-
-
-
-
-// 'use strict';
-// var hash = require('./models/account');
-// const nem = require("nem-sdk").default;
-// const crypto = require("crypto");
-
-//     return new Promise(async (resolve, reject)=>{
-//        //console.log("RecipientuserId=====>>",)
-//     var id = "5b837d006c80d41d04750565";
-//        var result=await hash.find({
-//                 "phonetosend":"9004450734"
-//             })
-//         console.log("result==========>",result);
-//         console.log("previoushash==========>",result[0].previousHashes);
-
-//                // Create an NIS endpoint object
-//                var endpoint = nem.model.objects.create("endpoint")("http://b1.nem.foundation", nem.model.nodes.mijinPort);
-//                console.log("result[0].previousHashes.length",nem.model.nodes.mijinPort)
-//                for(var i=0;i<result[0].previousHashes.length;i++){
-                
-            
-//                var AllTransaction=await (nem.com.requests.transaction.byHash(endpoint,result[0].previousHashes[i]))
-//                    console.log(AllTransaction.transaction.message.payload)
-//                    var fmt = nem.utils.format.hexToUtf8(AllTransaction.transaction.message.payload);
-//                 //    console.log(fmt)
-
-//                 console.log("StatusSaved==========>>", fmt)
-//                 var txObj=JSON.parse(fmt)
-//                 var txObjArray=[];
-//                 txObjArray.push(txObj)
-// console.log("transaction object==========",txObj)
-// console.log("txObjArray object==========",txObjArray)
-
-//                 return resolve({
-//                     "txObj": JSON.parse(txObj),
-//                    "txObjArray":JSON.parse(txObjArray)
-//                })
-           
-//            console.log(AllTransaction)
-//        }
-
-// })
-// 'use strict';
-// const nem = require("nem-sdk").default;
-// // const uploads = require("../models/uploaded")
-// const users = require("../models/account")
-// // const Requests = require('../models/request')
-
-
-
-
-// var privatekey= users.find({
-//     "userId":"8267"
-// })
-// console.log("Object for private key",privatekey)
+var promise=new Promise(function Cal_Rewards(Block_Size,totalfees,totalsize,n){
+if(Block_Size===0 || n===0){
+console.log("nothing to mine")
+}else if(totalsize>=Block_Size){
+  console.log("condition fail block size exceeds")
+  if(totalsize[n-1]<=Block_Size){
+    for(var i = 0; i < n-1; i++){
+      newsum += totalfees[i]
+      newsum1 += totalsize[i]
+    }
+    console.log('Summation of total tx fees ' + newsum);
+    console.log('Summation of total tx size ' + newsum1);
     
+     return newsum;
+
+  }
+
+}
+})
+
+
+promise.then({function(value){
+  console.log("======>",value)
+}
+})

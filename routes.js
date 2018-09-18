@@ -1,6 +1,8 @@
 'use strict';
 const nodemailer = require('nodemailer');
-// const verifyHash=require("./functions/VerificationOfHash")
+const StoreJSON=require("./functions/JSONPostMarks");
+const GetVerified=require("./functions/GetVErified");
+const Sample_Training=require("./functions/SampleTraining");
 var transporter = nodemailer.createTransport({
 	service: 'gmail',
 	auth: {
@@ -8,8 +10,8 @@ var transporter = nodemailer.createTransport({
 		pass: 'winpoc2018@'
 	}
 });
-const Sign=require('./functions/SignData')
-const Duplicate = require('./functions/DuplicateRequestLength')
+const Sign=require('./functions/SignData');
+const Duplicate = require('./functions/DuplicateRequestLength');
 const Nexmo = require('nexmo');
 const Signature = require('./functions/Signature');
 const nexmo = new Nexmo({
@@ -20,7 +22,7 @@ const VerifyByBlockchain = require("./functions/VerificationOfHash")
 const GetAuditTrailHallTicket = require("./functions/GetAuditTrailHallTicket");
 const UpdateAdmitDetails = require("./functions/UpdateAdmitDetail");
 const History = require("./functions/Admit_cardUpdate");
-var bcrypt = require('bcrypt');
+var   bcrypt = require('bcrypt');
 const saltRounds = 10;
 const myPlaintextPassword = 's0/\/\P4$$w0rD';
 const someOtherPlaintextPassword = 'not_bacon';
@@ -78,6 +80,12 @@ module.exports = router => {
 			message: "mock mock"
 		})
 
+	})
+
+router.get('/Hello',function(req, res){
+		res.send({
+			message:"hello word"
+		})
 	})
 
 	//================pdf download===============
@@ -901,11 +909,8 @@ module.exports = router => {
 	});
 
 
-	//=====================verify hash with blockchain data===============
+//=====================verify hash with blockchain data===============
 	router.post('/VerifyHashFromBlockchain', cors(), (req, res) => {
-
-		// var hash = req.body.hash;
-		// console.log("Hash of Document", hash)
 		var TransactionHash = req.body.TransactionHash;
 		console.log("Hash of TransactionHash", TransactionHash)
 
@@ -920,7 +925,7 @@ module.exports = router => {
 			})
 	})
 
-	//=========== verifying document with the mongo data=========  
+//=========== verifying document with the mongo data=========  
 	router.post('/verifyDocument', cors(), (req, res) => {
 		var hash = req.body.hash;
 		console.log("hash of document", hash)
@@ -938,4 +943,70 @@ module.exports = router => {
 				})
 			});
 	})
+//=========================Json Marksheet Data Retrieve from nem blockchain=================
+router.post('/MarkSheetJSON', cors(), (req, res) => {
+	var Marks = req.body.marks;
+	var candiName=req.body.candiName;
+	var Seat_Number=req.body.Seat_Number;
+	var motherName=req.body.motherName;
+	var status=req.body.status;
+	var fatherName=req.body.fatherName;
+	var schoolCode=req.body.schoolCode;
+	var schoolName=req.body.schoolName;
+	var userId=req.body.userId;
+	var TypeOform=req.body.TypeOform;
+
+	console.log("Array of Marks", Marks);
+	console.log("Details Of user",candiName,Seat_Number,motherName);
+
+	StoreJSON.PostDataChain(Marks,Seat_Number, status, candiName, motherName,  fatherName,schoolCode, schoolName, userId, TypeOform)
+		.then(result => {
+			res.send({
+				result:result
+			})
+			}).catch(err => {
+				res.status(err.status).json({
+					message: err.message
+				})
+			});
+})
+//====================get transaction=================GetVerified
+router.post('/verifyDocument2', cors(), (req, res) => {
+	var hash = req.body.hash;
+	console.log("hash of document", hash)
+	GetVerified.getDetails(hash)
+		.then(result => {
+			res.send({
+				message: "Hash verified successfullly",
+				result: result
+			});
+
+		})
+		.catch(err => {
+			res.status(err.status).json({
+				message: err.message
+			})
+		});
+})
+
+//========================training of nodejs====================
+router.post('/SamplePostApi', cors(), function (req, res) {
+	var userName=req.body.username;
+	var password=req.body.password;
+
+	Sample_Training.PostData(userName,password)
+	.then((result)=>{
+		res.send({
+			message:"successfully save data"
+
+		})
+
+	})
+
+
+	
+
+
+})
+
 }

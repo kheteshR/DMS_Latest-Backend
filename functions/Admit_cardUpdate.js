@@ -70,6 +70,7 @@ exports.HallTicketUpdate = (walletName, status, id, message) => {
 				//Serialize transfer transaction and announce
 				var hee = await (nem.model.transactions.send(common, transactionEntity, endpoint))
 				console.log("heeeeeeeeeeeeeeeeee================>", hee.transactionHash.data)
+				
 				result123 = await (admitModel.findOneAndUpdate({
 					_id: id
 				}, {
